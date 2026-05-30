@@ -1,0 +1,31 @@
+async function unlikeAll() {
+  console.log("Searching for likes...");
+  // Find all buttons that are currently "liked"
+  const unlikeButtons = document.querySelectorAll('[data-testid="unlike"]');
+  
+  if (unlikeButtons.length === 0) {
+    console.log("No likes found on screen. Scrolling down...");
+    window.scrollTo(0, document.body.scrollHeight);
+    // Wait 4 seconds for new tweets to load
+    setTimeout(unlikeAll, 4000);
+    return;
+  }
+
+  for (const btn of unlikeButtons) {
+    btn.click();
+    console.log("Unliked a post.");
+    
+    // Random delay between 1 and 3 seconds to mimic human behavior
+    const randomDelay = Math.floor(Math.random() * 2000) + 1000; 
+    await new Promise(resolve => setTimeout(resolve, randomDelay));
+  }
+
+  console.log("Finished current batch. Scrolling for more...");
+  window.scrollTo(0, document.body.scrollHeight);
+  
+  // Wait 4 seconds before starting the next batch
+  setTimeout(unlikeAll, 4000);
+}
+
+// Start the process
+unlikeAll();
